@@ -5,7 +5,7 @@
         <input type="text" name="" id="userlogIn">
         <label for="userPassword">Password:</label>
         <input type="text" name="" id="userPassword">
-        <button id="submitLogin">Submit</button>
+        <button @click="userlogIn">Submit</button>
     </div>
 </template>
 
@@ -15,8 +15,22 @@ import axios from 'axios';
     export default {
         name : "HomePage",
 
-        methods (userlogIn){
-
+        methods : { 
+            userlogIn(){}
+        },
+        mounted () {
+            axios.request({
+                // email: eve.holt@reqres.in password: cityslicka
+                url : "https://reqres.in/api/login",
+                method : "POST",
+                email : document.getElementById("userlogIn").value,
+                password : document.getElementById(`userPassword`).value
+            }).then ((router) =>{
+                router.push('@/views/GamePage');
+            }).catch((error) => {
+                console.log(error);
+                alert(error.response.data.error);
+            })
         }
     }
 
@@ -25,15 +39,13 @@ import axios from 'axios';
 
 <style scoped>
 div label{
-    padding: 10px,
+    padding: 10px;
+    margin-right: 5px
     
 }
 div button{
     margin-left: 15px;
     background-color: yellow;
-}
-template{
-    background-color: bisque;
 }
 
 </style>
